@@ -60,8 +60,8 @@ our $w = AE::io(
         while (my $msg = $sub->recvmsg(ZMQ_NOBLOCK)) {
             eval {
                 my $data = decode_json($msg->data);
-                say Dumper($data);
                 $msg->close;
+
                 for my $socket (values %connections) {
                     $socket->send($data);
                 }
